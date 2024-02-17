@@ -1,19 +1,19 @@
 # pve-templates
 Comandos para criação de templates Cloud-Init para o Proxmox VE
 
-# 1. DOWNLOAD DA IMAGEM DO UBUNTU 22.04 NO HYPERVISOR PROXMOX
+**1. DOWNLOAD DA IMAGEM DO UBUNTU 22.04 NO HYPERVISOR PROXMOX**
 cd /tmp
 wget https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
 
-# 2. INSTALAÇÃO DOS PACOTES NECESSÁRIOS, CASO AINDA NÂO OS TENHA INSTALADO NO PROXOMOX
+**2. INSTALAÇÃO DOS PACOTES NECESSÁRIOS, CASO AINDA NÂO OS TENHA INSTALADO NO PROXOMOX**
 sudo apt update -y
 sudo apt install libguestfs-tools -y
 
-# 3. INSTALAR O QEMU-GUEST-AGENT NA IMAGEM RECÉM BAIXADA
+**3. INSTALAR O QEMU-GUEST-AGENT NA IMAGEM RECÉM BAIXADA**
 virt-customize -a jammy-server-cloudimg-amd64.img --install qemu-guest-agent
 
 
-# 4. CRIAR UMA MÁQUINA VIRTUAL PROXMOX A PARTIR DA IMAGEM RECÉM MODIFICADA - **Conferir os parâmetros utilizados (negrito)
+**4. CRIAR UMA MÁQUINA VIRTUAL PROXMOX A PARTIR DA IMAGEM RECÉM MODIFICADA - **Conferir os parâmetros utilizados (negrito)**
 
 qm create **9001** --name **Ubuntu22.04-CloudInit** --ostype **l26** --cores **2** --sockets **1** --memory **2048**  --net0 virtio,bridge=**vmbr1**
 qm importdisk **9001** /tmp/jammy-server-cloudimg-amd64.img local-lvm
